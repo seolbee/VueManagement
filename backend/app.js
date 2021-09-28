@@ -9,7 +9,6 @@ var mongoose = require('mongoose');
 var {url, options} = require('./DB/credential');
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -25,7 +24,7 @@ app.use(cookieParser());
 mongoose.connect(url, options);
 
 app.use('/', indexRouter);
-app.use('/user/', usersRouter);
+// app.use('/user/', usersRouter);
 
 app.use(history());
 app.use(express.static(path.join(__dirname, 'public')));

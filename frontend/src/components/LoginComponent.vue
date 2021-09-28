@@ -1,29 +1,21 @@
 <template>
     <div class="background">
         <div class="image">
-            <h1>그래픽 디자이너, 웹 디자이너, <br> 모든 개발자 분들을 <br> 환영합니다.</h1>
-            <img src="../assets/img/illustration4.png" alt="img" class="main_image">
+            <h1>모든 개발자, 디자이너, <br> 퍼블리셔들이 당신을 기다립니다.</h1>
+            <img src="../assets/img/illustration5.png" alt="img" class="main_image">
         </div>
-        <div class="register">
-            <h1>회원가입</h1>
-            <form @submit.prevent="register">
+        <div class="login">
+            <h1>로그인</h1>
+            <form @submit.prevent="login">
                 <div class="input-box">
                     <label for="email">이메일</label>
                     <input type="email" v-model="user.email" :class="{'active' : this.active == 1}" @focus="setActive(1)" @blur="setActive(0)">
                 </div>
                 <div class="input-box">
-                    <label for="id">아이디</label>
-                    <input type="text" v-model="user.id" :class="{'active' : this.active == 2}" @focus="setActive(2)" @blur="setActive(0)">
-                </div>
-                <div class="input-box">
-                    <label for="name">이름</label>
-                    <input type="text" v-model="user.name" :class="{'active' : this.active == 3}" @focus="setActive(3)" @blur="setActive(0)">
-                </div>
-                <div class="input-box">
                     <label for="password">패스워드</label>
-                    <input type="password" v-model="user.password" :class="{'active' : this.active == 4}" @focus="setActive(4)" @blur="setActive(0)">
+                    <input type="password" v-model="user.password" :class="{'active' : this.active == 2}" @focus="setActive(2)" @blur="setActive(0)">
                 </div>
-                <button>회원가입</button>
+                <button>로그인</button>
             </form>
         </div>
     </div>
@@ -33,42 +25,28 @@ export default {
     data(){
         return {
             user : {
-                'id' : '',
                 'email' : '',
-                'name' : '',
                 'password' : ''
             },
             active : 0
         }
     },
     methods:{
-        async register() {
-            let is_register = true;
+        async login() {
+            let is_login = true;
             if(this.user.email.trim() === ""){
-                is_register = false;
-            }
-
-            if(this.user.id.trim() === ""){
-                is_register = false;
-            }
-
-            if(this.user.name.trim() === ""){
-                is_register = false;
+                is_login = false;
             }
 
             if(this.user.password.trim() === ""){
-                is_register = false;
+                is_login = false;
             }
 
-            if(!is_register){
+            if(!is_login){
                 return false;
             }
 
-            // let res = await this.axios.post('/user/register', this.user);
-            // if(res.data.success){
-            //     this.$router.push('/login');
-            // }
-            this.$store.dispatch('register', this.user);
+            this.$store.dispatch('login', this.user);
         },
 
         setActive(idx){
@@ -104,11 +82,11 @@ export default {
 
     .main_image{
         margin-top: 250px;
-        width: 70%;
-        height: 40%;
+        width: 80%;
+        height: 50%;
     }
 
-    .register{
+    .login{
         height: 100%;
         justify-content: center;
         flex-direction: column;
@@ -116,13 +94,13 @@ export default {
         padding-left: 500px;
     }
 
-    .register > h1{
+    .login > h1{
         width: 50%;
         border-bottom: 1px solid #ccc;
         padding-bottom: 20px;
     }
 
-    .register > form {
+    .login > form {
         width: 50%;
         text-align: left;
         margin-top: 10px;

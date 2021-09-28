@@ -8,6 +8,7 @@ var app = require('../app');
 var debug = require('debug')('backend:server');
 var http = require('http');
 var socket = require('socket.io');
+var auth = require('../API/auth');
 
 /**
  * Get port from environment and store in Express.
@@ -21,10 +22,24 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var io = socket(server);
+var io = socket(server, {cors:{
+  origin:'*',
+  method:['GET', 'POST'],
+  allowedHeaders:['header'],
+  credentials:true
+}});
 
 io.on('connect', socket => {
-  
+  //회원가입
+  socket.on('register', (user) => {
+    auth.register(user).then(data=> socket.emit('register-res', data));
+  });
+  //로그인
+  socket.on('login', (user)=> {
+    auth.login(user).then(data=> socket.emit('login-res', data));
+  });
+
+  //
 });
 
 /**
